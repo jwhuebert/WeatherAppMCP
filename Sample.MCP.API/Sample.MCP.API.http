@@ -1,0 +1,6 @@
+@Sample.MCP.API_HostAddress = http://localhost:5047
+
+GET {{Sample.MCP.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
