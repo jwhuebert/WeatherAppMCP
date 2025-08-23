@@ -13,7 +13,7 @@ namespace WeatherApp.McpServer
     class Program
     {
         private static readonly HttpClient httpClient = new HttpClient();
-        private static readonly string apiBaseUrl = Environment.GetEnvironmentVariable("WEATHER_API_URL") ?? "http://localhost:5000";
+        private static readonly string apiBaseUrl = Environment.GetEnvironmentVariable("WEATHER_API_URL") ?? "http://localhost:5047";
         private static readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
@@ -40,7 +40,10 @@ namespace WeatherApp.McpServer
                 try
                 {
                     var line = await reader.ReadLineAsync();
-                    if (string.IsNullOrEmpty(line))
+                    if (line == null)
+                        break; // EOF reached
+                    
+                    if (string.IsNullOrWhiteSpace(line))
                         continue;
 
                     var request = JsonSerializer.Deserialize<McpRequest>(line, jsonOptions);
